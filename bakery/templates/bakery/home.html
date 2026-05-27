@@ -1,0 +1,15 @@
+﻿{% extends 'bakery/base.html' %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Пекарня с характером и теплом</h1>
+  <p>Каждое утро мы выпекаем хлеб, багеты и булочки небольшими партиями, чтобы на витрине всегда была только свежая выпечка.</p>
+  <a class="btn" href="{% url 'product_list' %}">Смотреть товары</a>
+</section>
+
+<section class="info-strip">
+  <div><strong>Ежедневно</strong><span>с 07:00 до 22:00</span></div>
+  <div><strong>Доставка</strong><span>по Москве и области</span></div>
+  <div><strong>Состав</strong><span>без лишних добавок</span></div>
+</section>
+{% endblock %}

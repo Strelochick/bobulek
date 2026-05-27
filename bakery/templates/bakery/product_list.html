@@ -1,0 +1,25 @@
+﻿{% extends 'bakery/base.html' %}
+{% load static %}
+{% block title %}Товары{% endblock %}
+{% block content %}
+<h1>Товары</h1>
+<p class="section-lead">Выберите хлеб, выпечку или десерт из нашего каталога.</p>
+<div class="grid">
+{% for product in products %}
+  <article class="card">
+    {% if product.image %}
+      <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    {% else %}
+      <img src="{% static 'bakery/img/placeholder-product.svg' %}" alt="Нет изображения">
+    {% endif %}
+    <h3>{{ product.name }}</h3>
+    <p>{{ product.short_description }}</p>
+    <p><b>{{ product.price }} ₽</b></p>
+    <p class="muted">Категория: {{ product.category.name }}</p>
+    <a class="btn" href="{% url 'product_detail' product.pk %}">Подробнее</a>
+  </article>
+{% empty %}
+  <p>Товары отсутствуют.</p>
+{% endfor %}
+</div>
+{% endblock %}

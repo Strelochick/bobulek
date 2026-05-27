@@ -1,0 +1,16 @@
+﻿{% extends 'bakery/base.html' %}
+{% block title %}Отзывы{% endblock %}
+{% block content %}
+<h1>Отзывы покупателей</h1>
+<div class="grid">
+{% for review in reviews %}
+  <article class="card">
+    <h3>{{ review.product.name }}</h3>
+    <p class="muted">Автор: {{ review.customer_name }}</p>
+    <p><strong>Оценка:</strong> {{ review.rating }}/5</p>
+    <p>{{ review.text }}</p>
+    <small>{{ review.created_at|date:'d.m.Y' }}</small>
+  </article>
+{% endfor %}
+</div>
+{% endblock %}

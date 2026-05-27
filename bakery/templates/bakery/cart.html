@@ -1,0 +1,12 @@
+﻿{% extends 'bakery/base.html' %}
+{% block title %}Корзина{% endblock %}
+{% block content %}
+<h1>Корзина</h1>
+<p class="section-lead">Демо-макет корзины без серверной логики.</p>
+<table class="cart">
+  <tr><th>Товар</th><th>Кол-во</th><th>Цена</th></tr>
+  <tr><td>Батон нарезной</td><td>2</td><td>120 ₽</td></tr>
+  <tr><td>Круассан классический</td><td>3</td><td>210 ₽</td></tr>
+  <tr><td colspan="2"><b>Итого</b></td><td><b>330 ₽</b></td></tr>
+</table>
+{% endblock %}

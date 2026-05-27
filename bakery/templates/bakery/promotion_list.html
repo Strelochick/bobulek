@@ -1,0 +1,16 @@
+﻿{% extends 'bakery/base.html' %}
+{% load static %}
+{% block title %}Акции{% endblock %}
+{% block content %}
+<h1>Акции</h1>
+<div class="grid">
+{% for promotion in promotions %}
+  <article class="card">
+    {% if promotion.image %}<img src="{{ promotion.image.url }}" alt="{{ promotion.title }}">{% else %}<img src="{% static 'bakery/img/placeholder-promotion.svg' %}" alt="Акция">{% endif %}
+    <h3>{{ promotion.title }}</h3>
+    <p>Скидка {{ promotion.discount_percent }}%</p>
+    <a class="btn" href="{% url 'promotion_detail' promotion.pk %}">Подробнее</a>
+  </article>
+{% endfor %}
+</div>
+{% endblock %}

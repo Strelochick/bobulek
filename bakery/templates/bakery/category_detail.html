@@ -1,0 +1,15 @@
+﻿{% extends 'bakery/base.html' %}
+{% load static %}
+{% block title %}{{ category.name }}{% endblock %}
+{% block content %}
+<section class="section">
+  <h1>{{ category.name }}</h1>
+  {% if category.image %}<img class="cat-img" src="{{ category.image.url }}" alt="{{ category.name }}">{% else %}<img class="cat-img" src="{% static 'bakery/img/placeholder-category.svg' %}" alt="Категория">{% endif %}
+  <p>{{ category.description }}</p>
+</section>
+<section class="section">
+  <h2>Товары категории</h2>
+  <ul>{% for p in category.products.all %}<li><a href="{% url 'product_detail' p.pk %}">{{ p.name }}</a> — {{ p.price }} ₽</li>{% empty %}<li>Нет товаров</li>{% endfor %}</ul>
+  <a class="btn" href="{% url 'category_list' %}">Назад к категориям</a>
+</section>
+{% endblock %}

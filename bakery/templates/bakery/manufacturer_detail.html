@@ -1,0 +1,16 @@
+﻿{% extends 'bakery/base.html' %}
+{% load static %}
+{% block title %}{{ manufacturer.name }}{% endblock %}
+{% block content %}
+<section class="section">
+  <h1>{{ manufacturer.name }}</h1>
+  {% if manufacturer.logo %}<img class="cat-img" src="{{ manufacturer.logo.url }}" alt="{{ manufacturer.name }}">{% else %}<img class="cat-img" src="{% static 'bakery/img/placeholder-manufacturer.svg' %}" alt="Производитель">{% endif %}
+  <p>{{ manufacturer.description }}</p>
+  <p>{{ manufacturer.address }} | {{ manufacturer.phone }}</p>
+</section>
+<section class="section">
+  <h2>Товары производителя</h2>
+  <ul>{% for p in manufacturer.products.all %}<li><a href="{% url 'product_detail' p.pk %}">{{ p.name }}</a></li>{% empty %}<li>Товары пока не добавлены</li>{% endfor %}</ul>
+  <a class="btn" href="{% url 'manufacturer_list' %}">Назад к производителям</a>
+</section>
+{% endblock %}
