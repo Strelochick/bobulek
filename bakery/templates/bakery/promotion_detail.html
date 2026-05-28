@@ -7,6 +7,7 @@
   {% if promotion.image %}<img class="cat-img" src="{{ promotion.image.url }}" alt="{{ promotion.title }}">{% else %}<img class="cat-img" src="{% static 'bakery/img/placeholder-promotion.svg' %}" alt="Акция">{% endif %}
   <p>{{ promotion.description }}</p>
   <p>Период: {{ promotion.start_date }} - {{ promotion.end_date }}</p>
-  <a class="btn" href="{% url 'promotion_list' %}">Назад к акциям</a>
+  <a class="btn" href="{% url 'promotion_update' promotion.pk %}">Изменить</a> <a class="btn" href="{% url 'promotion_delete' promotion.pk %}">Удалить</a> <a class="btn" href="{% url 'promotion_list' %}">Назад к акциям</a>
 </section>
 {% endblock %}
+

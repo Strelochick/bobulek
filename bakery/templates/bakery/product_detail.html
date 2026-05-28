@@ -17,7 +17,8 @@
     <p>{{ product.description }}</p>
     <p><strong>Производитель:</strong> <a href="{% url 'manufacturer_detail' product.manufacturer.pk %}">{{ product.manufacturer.name }}</a></p>
     <p><strong>Наличие:</strong> {% if product.is_available %}В наличии{% else %}Нет в наличии{% endif %}</p>
-    <a class="btn" href="{% url 'product_list' %}">Назад к товарам</a>
+    <a class="btn" href="{% url 'product_update' product.pk %}">Изменить</a> <a class="btn" href="{% url 'product_delete' product.pk %}">Удалить</a> <a class="btn" href="{% url 'product_list' %}">Назад к товарам</a>
   </div>
 </article>
 {% endblock %}
+

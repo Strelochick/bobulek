@@ -11,6 +11,7 @@
 <section class="section">
   <h2>Товары производителя</h2>
   <ul>{% for p in manufacturer.products.all %}<li><a href="{% url 'product_detail' p.pk %}">{{ p.name }}</a></li>{% empty %}<li>Товары пока не добавлены</li>{% endfor %}</ul>
-  <a class="btn" href="{% url 'manufacturer_list' %}">Назад к производителям</a>
+  <a class="btn" href="{% url 'manufacturer_update' manufacturer.pk %}">Изменить</a> <a class="btn" href="{% url 'manufacturer_delete' manufacturer.pk %}">Удалить</a> <a class="btn" href="{% url 'manufacturer_list' %}">Назад к производителям</a>
 </section>
 {% endblock %}
+

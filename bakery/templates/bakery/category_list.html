@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Категории{% endblock %}
 {% block content %}
-<h1>Категории</h1>
+<h1>Категории</h1><a class="btn" href="{% url 'category_create' %}">Добавить категорию</a>
 <div class="grid">
 {% for category in categories %}
   <article class="card">
@@ -14,3 +14,4 @@
 {% endfor %}
 </div>
 {% endblock %}
+

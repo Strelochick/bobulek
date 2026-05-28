@@ -1,0 +1,12 @@
+﻿{% extends 'bakery/base.html' %}
+{% block title %}Удаление{% endblock %}
+{% block content %}
+<section class="section">
+  <h1>Подтвердите удаление</h1>
+  <p>Вы действительно хотите удалить объект: <strong>{{ object }}</strong>?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn">Удалить</button>
+  </form>
+</section>
+{% endblock %}

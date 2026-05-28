@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Акции{% endblock %}
 {% block content %}
-<h1>Акции</h1>
+<h1>Акции</h1><a class="btn" href="{% url 'promotion_create' %}">Добавить акцию</a>
 <div class="grid">
 {% for promotion in promotions %}
   <article class="card">
@@ -14,3 +14,4 @@
 {% endfor %}
 </div>
 {% endblock %}
+

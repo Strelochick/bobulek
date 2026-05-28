@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Производители{% endblock %}
 {% block content %}
-<h1>Производители</h1>
+<h1>Производители</h1><a class="btn" href="{% url 'manufacturer_create' %}">Добавить производителя</a>
 <div class="grid">
 {% for m in manufacturers %}
   <article class="card">
@@ -14,3 +14,4 @@
 {% endfor %}
 </div>
 {% endblock %}
+

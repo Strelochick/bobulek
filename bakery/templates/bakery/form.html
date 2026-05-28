@@ -1,0 +1,12 @@
+﻿{% extends 'bakery/base.html' %}
+{% block title %}Форма{% endblock %}
+{% block content %}
+<section class="section">
+  <h1>Форма</h1>
+  <form method="post" enctype="multipart/form-data" class="form-grid">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">Сохранить</button>
+  </form>
+</section>
+{% endblock %}

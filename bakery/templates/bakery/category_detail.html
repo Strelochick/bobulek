@@ -10,6 +10,7 @@
 <section class="section">
   <h2>Товары категории</h2>
   <ul>{% for p in category.products.all %}<li><a href="{% url 'product_detail' p.pk %}">{{ p.name }}</a> — {{ p.price }} ₽</li>{% empty %}<li>Нет товаров</li>{% endfor %}</ul>
-  <a class="btn" href="{% url 'category_list' %}">Назад к категориям</a>
+  <a class="btn" href="{% url 'category_update' category.pk %}">Изменить</a> <a class="btn" href="{% url 'category_delete' category.pk %}">Удалить</a> <a class="btn" href="{% url 'category_list' %}">Назад к категориям</a>
 </section>
 {% endblock %}
+
