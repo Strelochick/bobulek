@@ -1,0 +1,54 @@
+﻿<mxfile host="app.diagrams.net" modified="2026-06-01T12:00:00.000Z" agent="Codex" version="24.7.17">
+  <diagram id="infological" name="Infological Schema">
+    <mxGraphModel dx="1420" dy="840" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="cat" value="Category&#xa;id&#xa;name&#xa;description&#xa;image" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="120" y="130" width="220" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="man" value="Manufacturer&#xa;id&#xa;name&#xa;description&#xa;address&#xa;phone&#xa;logo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="520" y="120" width="240" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="prod" value="Product&#xa;id&#xa;name&#xa;category_id&#xa;price&#xa;weight&#xa;composition&#xa;description&#xa;short_description&#xa;image&#xa;is_available&#xa;manufacturer_id&#xa;created_at" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="300" y="350" width="290" height="280" as="geometry"/>
+        </mxCell>
+        <mxCell id="cust" value="Customer&#xa;id&#xa;first_name&#xa;last_name&#xa;phone&#xa;email&#xa;address" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="850" y="120" width="220" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="ord" value="Order&#xa;id&#xa;customer_id&#xa;created_at&#xa;status&#xa;total_price" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="860" y="390" width="220" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="oi" value="OrderItem&#xa;id&#xa;order_id&#xa;product_id&#xa;quantity&#xa;price" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="650" y="650" width="220" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="rev" value="Review&#xa;id&#xa;product_id&#xa;customer_name&#xa;rating&#xa;text&#xa;created_at" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="70" y="650" width="220" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="promo" value="Promotion&#xa;id&#xa;title&#xa;description&#xa;discount_percent&#xa;start_date&#xa;end_date&#xa;image" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#000000;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="380" width="230" height="190" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e1" value="1 : N" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="cat" target="prod">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" value="1 : N" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="man" target="prod">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" value="1 : N" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="cust" target="ord">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" value="1 : N" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="ord" target="oi">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" value="1 : N" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="prod" target="oi">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" value="1 : N" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="prod" target="rev">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

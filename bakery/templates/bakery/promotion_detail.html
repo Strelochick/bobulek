@@ -1,13 +1,15 @@
 ﻿{% extends 'bakery/base.html' %}
-{% load static %}
 {% block title %}{{ promotion.title }}{% endblock %}
 {% block content %}
 <section class="section">
   <h1>{{ promotion.title }}</h1>
-  {% if promotion.image %}<img class="cat-img" src="{{ promotion.image.url }}" alt="{{ promotion.title }}">{% else %}<img class="cat-img" src="{% static 'bakery/img/placeholder-promotion.svg' %}" alt="Акция">{% endif %}
+  {% include 'bakery/includes/entity_image.html' with image=promotion.image image_class='cat-img' alt_text=promotion.title placeholder='bakery/img/placeholder-promotion.svg' fallback_alt='Акция' %}
   <p>{{ promotion.description }}</p>
   <p>Период: {{ promotion.start_date }} - {{ promotion.end_date }}</p>
-  <a class="btn" href="{% url 'promotion_update' promotion.pk %}">Изменить</a> <a class="btn" href="{% url 'promotion_delete' promotion.pk %}">Удалить</a> <a class="btn" href="{% url 'promotion_list' %}">Назад к акциям</a>
+  {% url 'promotion_update' promotion.pk as update_url %}
+  {% url 'promotion_delete' promotion.pk as delete_url %}
+  {% url 'promotion_list' as back_url %}
+  {% include 'bakery/includes/detail_actions.html' with update_url=update_url delete_url=delete_url back_url=back_url back_label='Назад к акциям' %}
 </section>
 {% endblock %}
 

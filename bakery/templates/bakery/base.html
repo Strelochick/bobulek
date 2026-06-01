@@ -3,11 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{% block meta_description %}Булочная Хлебный Дом: свежая выпечка, торты и десерты каждый день.{% endblock %}">
   <title>{% block title %}Булочная{% endblock %}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Prata&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% load static %}{% static 'bakery/css/style.css' %}">
+  {% load static %}
+  <link rel="icon" type="image/svg+xml" href="{% static 'core/img/favicon.svg' %}">
+  <link rel="stylesheet" href="{% static 'core/css/global.css' %}">
+  <link rel="stylesheet" href="{% static 'bakery/css/style.css' %}">
+  {% block extra_head %}{% endblock %}
 </head>
 <body>
 <div class="bg-shape bg-shape-1"></div>
@@ -16,22 +21,35 @@
   <div class="container nav-wrap">
     <a href="{% url 'home' %}" class="logo">Хлебный Дом</a>
     <nav>
-      <a href="{% url 'home' %}">Главная</a>
-      <a href="{% url 'about' %}">О компании</a>
-      <a href="{% url 'product_list' %}">Товары</a>
-      <a href="{% url 'category_list' %}">Категории</a>
-      <a href="{% url 'manufacturer_list' %}">Производители</a>
-      <a href="{% url 'promotion_list' %}">Акции</a>
-      <a href="{% url 'review_list' %}">Отзывы</a>
-      <a href="{% url 'cart' %}">Корзина</a>
+      <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}is-active{% endif %}">Главная</a>
+      <a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}is-active{% endif %}">О компании</a>
+      <a href="{% url 'product_list' %}" class="{% if request.resolver_match.url_name == 'product_list' or request.resolver_match.url_name == 'product_detail' %}is-active{% endif %}">Товары</a>
+      <a href="{% url 'category_list' %}" class="{% if request.resolver_match.url_name == 'category_list' or request.resolver_match.url_name == 'category_detail' %}is-active{% endif %}">Категории</a>
+      <a href="{% url 'manufacturer_list' %}" class="{% if request.resolver_match.url_name == 'manufacturer_list' or request.resolver_match.url_name == 'manufacturer_detail' %}is-active{% endif %}">Производители</a>
+      <a href="{% url 'promotion_list' %}" class="{% if request.resolver_match.url_name == 'promotion_list' or request.resolver_match.url_name == 'promotion_detail' %}is-active{% endif %}">Акции</a>
+      <a href="{% url 'review_list' %}" class="{% if request.resolver_match.url_name == 'review_list' %}is-active{% endif %}">Отзывы</a>
+      <a href="{% url 'cart' %}" class="{% if request.resolver_match.url_name == 'cart' %}is-active{% endif %}">Корзина</a>
     </nav>
   </div>
 </header>
 <main class="container content-wrap">
+  {% block top_elements %}
+    {% include 'bakery/includes/breadcrumbs.html' %}
+    {% include 'bakery/includes/quick_actions.html' %}
+  {% endblock %}
+  {% if messages %}
+    <section class="messages" aria-label="Системные сообщения">
+      {% for message in messages %}
+        <div class="message {{ message.tags|default:'info' }}">{{ message }}</div>
+      {% endfor %}
+    </section>
+  {% endif %}
   {% block content %}{% endblock %}
 </main>
 <footer class="site-footer">
-  <div class="container">© 2026 Хлебный Дом · Свежая выпечка каждый день</div>
+  <div class="container">© <span data-current-year>2026</span> Хлебный Дом · Свежая выпечка каждый день</div>
 </footer>
+<script src="{% static 'core/js/global.js' %}"></script>
+{% block extra_scripts %}{% endblock %}
 </body>
 </html>

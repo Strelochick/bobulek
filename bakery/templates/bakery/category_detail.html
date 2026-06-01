@@ -1,16 +1,19 @@
 ﻿{% extends 'bakery/base.html' %}
-{% load static %}
 {% block title %}{{ category.name }}{% endblock %}
 {% block content %}
 <section class="section">
   <h1>{{ category.name }}</h1>
-  {% if category.image %}<img class="cat-img" src="{{ category.image.url }}" alt="{{ category.name }}">{% else %}<img class="cat-img" src="{% static 'bakery/img/placeholder-category.svg' %}" alt="Категория">{% endif %}
+  {% include 'bakery/includes/entity_image.html' with image=category.image image_class='cat-img' alt_text=category.name placeholder='bakery/img/placeholder-category.svg' fallback_alt='Категория' %}
   <p>{{ category.description }}</p>
 </section>
 <section class="section">
   <h2>Товары категории</h2>
   <ul>{% for p in category.products.all %}<li><a href="{% url 'product_detail' p.pk %}">{{ p.name }}</a> — {{ p.price }} ₽</li>{% empty %}<li>Нет товаров</li>{% endfor %}</ul>
-  <a class="btn" href="{% url 'category_update' category.pk %}">Изменить</a> <a class="btn" href="{% url 'category_delete' category.pk %}">Удалить</a> <a class="btn" href="{% url 'category_list' %}">Назад к категориям</a>
+  {% url 'category_update' category.pk as update_url %}
+  {% url 'category_delete' category.pk as delete_url %}
+  {% url 'category_list' as back_url %}
+  {% include 'bakery/includes/detail_actions.html' with update_url=update_url delete_url=delete_url back_url=back_url back_label='Назад к категориям' %}
 </section>
 {% endblock %}
+
 

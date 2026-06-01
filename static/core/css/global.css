@@ -1,0 +1,21 @@
+/* Global static styles for the whole project */
+:root {
+  --container-max-width: 1120px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+  max-width: var(--container-max-width);
+}

@@ -1,0 +1,7 @@
+﻿{% load static %}
+{% if image %}
+  <img{% if image_class %} class="{{ image_class }}"{% endif %} src="{{ image.url }}" alt="{{ alt_text }}">
+{% else %}
+  <img{% if image_class %} class="{{ image_class }}"{% endif %} src="{% static placeholder %}" alt="{{ fallback_alt }}">
+{% endif %}
+

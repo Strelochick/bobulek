@@ -1,17 +1,13 @@
 ﻿{% extends 'bakery/base.html' %}
-{% load static %}
 {% block title %}Товары{% endblock %}
 {% block content %}
-<h1>Товары</h1><a class="btn" href="{% url 'product_create' %}">Добавить товар</a>
+{% url 'product_create' as product_create_url %}
+{% include 'bakery/includes/page_header.html' with title='Товары' create_url=product_create_url create_label='Добавить товар' %}
 <p class="section-lead">Выберите хлеб, выпечку или десерт из нашего каталога.</p>
 <div class="grid">
 {% for product in products %}
   <article class="card">
-    {% if product.image %}
-      <img src="{{ product.image.url }}" alt="{{ product.name }}">
-    {% else %}
-      <img src="{% static 'bakery/img/placeholder-product.svg' %}" alt="Нет изображения">
-    {% endif %}
+    {% include 'bakery/includes/entity_image.html' with image=product.image alt_text=product.name placeholder='bakery/img/placeholder-product.svg' fallback_alt='Нет изображения' %}
     <h3>{{ product.name }}</h3>
     <p>{{ product.short_description }}</p>
     <p><b>{{ product.price }} ₽</b></p>
@@ -23,4 +19,5 @@
 {% endfor %}
 </div>
 {% endblock %}
+
 

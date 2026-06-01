@@ -1,17 +1,19 @@
 ﻿{% extends 'bakery/base.html' %}
-{% load static %}
 {% block title %}{{ manufacturer.name }}{% endblock %}
 {% block content %}
 <section class="section">
   <h1>{{ manufacturer.name }}</h1>
-  {% if manufacturer.logo %}<img class="cat-img" src="{{ manufacturer.logo.url }}" alt="{{ manufacturer.name }}">{% else %}<img class="cat-img" src="{% static 'bakery/img/placeholder-manufacturer.svg' %}" alt="Производитель">{% endif %}
+  {% include 'bakery/includes/entity_image.html' with image=manufacturer.logo image_class='cat-img' alt_text=manufacturer.name placeholder='bakery/img/placeholder-manufacturer.svg' fallback_alt='Производитель' %}
   <p>{{ manufacturer.description }}</p>
   <p>{{ manufacturer.address }} | {{ manufacturer.phone }}</p>
 </section>
 <section class="section">
   <h2>Товары производителя</h2>
   <ul>{% for p in manufacturer.products.all %}<li><a href="{% url 'product_detail' p.pk %}">{{ p.name }}</a></li>{% empty %}<li>Товары пока не добавлены</li>{% endfor %}</ul>
-  <a class="btn" href="{% url 'manufacturer_update' manufacturer.pk %}">Изменить</a> <a class="btn" href="{% url 'manufacturer_delete' manufacturer.pk %}">Удалить</a> <a class="btn" href="{% url 'manufacturer_list' %}">Назад к производителям</a>
+  {% url 'manufacturer_update' manufacturer.pk as update_url %}
+  {% url 'manufacturer_delete' manufacturer.pk as delete_url %}
+  {% url 'manufacturer_list' as back_url %}
+  {% include 'bakery/includes/detail_actions.html' with update_url=update_url delete_url=delete_url back_url=back_url back_label='Назад к производителям' %}
 </section>
 {% endblock %}
 

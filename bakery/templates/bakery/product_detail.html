@@ -1,13 +1,8 @@
 ﻿{% extends 'bakery/base.html' %}
-{% load static %}
 {% block title %}{{ product.name }}{% endblock %}
 {% block content %}
 <article class="detail">
-  {% if product.image %}
-    <img src="{{ product.image.url }}" alt="{{ product.name }}">
-  {% else %}
-    <img src="{% static 'bakery/img/placeholder-product.svg' %}" alt="Нет изображения">
-  {% endif %}
+  {% include 'bakery/includes/entity_image.html' with image=product.image alt_text=product.name placeholder='bakery/img/placeholder-product.svg' fallback_alt='Нет изображения' %}
   <div>
     <h1>{{ product.name }}</h1>
     <p><strong>Категория:</strong> {{ product.category.name }}</p>
@@ -17,8 +12,12 @@
     <p>{{ product.description }}</p>
     <p><strong>Производитель:</strong> <a href="{% url 'manufacturer_detail' product.manufacturer.pk %}">{{ product.manufacturer.name }}</a></p>
     <p><strong>Наличие:</strong> {% if product.is_available %}В наличии{% else %}Нет в наличии{% endif %}</p>
-    <a class="btn" href="{% url 'product_update' product.pk %}">Изменить</a> <a class="btn" href="{% url 'product_delete' product.pk %}">Удалить</a> <a class="btn" href="{% url 'product_list' %}">Назад к товарам</a>
+    {% url 'product_update' product.pk as update_url %}
+    {% url 'product_delete' product.pk as delete_url %}
+    {% url 'product_list' as back_url %}
+    {% include 'bakery/includes/detail_actions.html' with update_url=update_url delete_url=delete_url back_url=back_url back_label='Назад к товарам' %}
   </div>
 </article>
 {% endblock %}
+
 

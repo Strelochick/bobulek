@@ -1,0 +1,27 @@
+<nav class="breadcrumbs" aria-label="Хлебные крошки">
+  <a href="{% url 'home' %}">Главная</a>
+  {% if request.resolver_match.url_name != 'home' %}
+    <span>/</span>
+    {% if page_title %}
+      <span>{{ page_title }}</span>
+    {% else %}
+      <span>
+        {% if request.resolver_match.url_name == 'about' %}О компании
+        {% elif request.resolver_match.url_name == 'product_list' %}Товары
+        {% elif request.resolver_match.url_name == 'product_detail' %}Товар
+        {% elif request.resolver_match.url_name == 'product_create' %}Добавить товар
+        {% elif request.resolver_match.url_name == 'product_update' %}Редактировать товар
+        {% elif request.resolver_match.url_name == 'category_list' %}Категории
+        {% elif request.resolver_match.url_name == 'category_detail' %}Категория
+        {% elif request.resolver_match.url_name == 'manufacturer_list' %}Производители
+        {% elif request.resolver_match.url_name == 'manufacturer_detail' %}Производитель
+        {% elif request.resolver_match.url_name == 'promotion_list' %}Акции
+        {% elif request.resolver_match.url_name == 'promotion_detail' %}Акция
+        {% elif request.resolver_match.url_name == 'review_list' %}Отзывы
+        {% elif request.resolver_match.url_name == 'cart' %}Корзина
+        {% else %}Раздел
+        {% endif %}
+      </span>
+    {% endif %}
+  {% endif %}
+</nav>

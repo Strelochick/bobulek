@@ -1,12 +1,12 @@
 ﻿{% extends 'bakery/base.html' %}
-{% load static %}
 {% block title %}Категории{% endblock %}
 {% block content %}
-<h1>Категории</h1><a class="btn" href="{% url 'category_create' %}">Добавить категорию</a>
+{% url 'category_create' as category_create_url %}
+{% include 'bakery/includes/page_header.html' with title='Категории' create_url=category_create_url create_label='Добавить категорию' %}
 <div class="grid">
 {% for category in categories %}
   <article class="card">
-    {% if category.image %}<img src="{{ category.image.url }}" alt="{{ category.name }}">{% else %}<img src="{% static 'bakery/img/placeholder-category.svg' %}" alt="Категория">{% endif %}
+    {% include 'bakery/includes/entity_image.html' with image=category.image alt_text=category.name placeholder='bakery/img/placeholder-category.svg' fallback_alt='Категория' %}
     <h3>{{ category.name }}</h3>
     <p>{{ category.description }}</p>
     <a class="btn" href="{% url 'category_detail' category.pk %}">Открыть категорию</a>

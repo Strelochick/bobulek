@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Bakery icon">
+  <rect width="64" height="64" rx="14" fill="#f3e4d1"/>
+  <path d="M12 36c0-10 8-18 20-18s20 8 20 18v4H12v-4z" fill="#b9652c"/>
+  <path d="M16 36c3-4 7-6 16-6s13 2 16 6" stroke="#fff7ec" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <circle cx="24" cy="28" r="2" fill="#8f4b1f"/>
+  <circle cx="32" cy="26" r="2" fill="#8f4b1f"/>
+  <circle cx="40" cy="28" r="2" fill="#8f4b1f"/>
+</svg>

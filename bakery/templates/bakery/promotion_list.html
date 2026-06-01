@@ -1,12 +1,12 @@
 ﻿{% extends 'bakery/base.html' %}
-{% load static %}
 {% block title %}Акции{% endblock %}
 {% block content %}
-<h1>Акции</h1><a class="btn" href="{% url 'promotion_create' %}">Добавить акцию</a>
+{% url 'promotion_create' as promotion_create_url %}
+{% include 'bakery/includes/page_header.html' with title='Акции' create_url=promotion_create_url create_label='Добавить акцию' %}
 <div class="grid">
 {% for promotion in promotions %}
   <article class="card">
-    {% if promotion.image %}<img src="{{ promotion.image.url }}" alt="{{ promotion.title }}">{% else %}<img src="{% static 'bakery/img/placeholder-promotion.svg' %}" alt="Акция">{% endif %}
+    {% include 'bakery/includes/entity_image.html' with image=promotion.image alt_text=promotion.title placeholder='bakery/img/placeholder-promotion.svg' fallback_alt='Акция' %}
     <h3>{{ promotion.title }}</h3>
     <p>Скидка {{ promotion.discount_percent }}%</p>
     <a class="btn" href="{% url 'promotion_detail' promotion.pk %}">Подробнее</a>
