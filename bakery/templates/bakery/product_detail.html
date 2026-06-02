@@ -12,6 +12,15 @@
     <p>{{ product.description }}</p>
     <p><strong>Производитель:</strong> <a href="{% url 'manufacturer_detail' product.manufacturer.pk %}">{{ product.manufacturer.name }}</a></p>
     <p><strong>Наличие:</strong> {% if product.is_available %}В наличии{% else %}Нет в наличии{% endif %}</p>
+    {% if product.is_available %}
+      <form action="{% url 'cart_add' product.pk %}" method="post" class="inline-form">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        <label for="quantity">Количество</label>
+        <input id="quantity" type="number" name="quantity" min="1" max="99" value="1">
+        <button class="btn" type="submit">Добавить в корзину</button>
+      </form>
+    {% endif %}
     {% url 'product_update' product.pk as update_url %}
     {% url 'product_delete' product.pk as delete_url %}
     {% url 'product_list' as back_url %}

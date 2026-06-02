@@ -12,7 +12,16 @@
     <p>{{ product.short_description }}</p>
     <p><b>{{ product.price }} ₽</b></p>
     <p class="muted">Категория: {{ product.category.name }}</p>
-    <a class="btn" href="{% url 'product_detail' product.pk %}">Подробнее</a>
+    <div class="actions-row product-actions">
+      <a class="btn" href="{% url 'product_detail' product.pk %}">Подробнее</a>
+      {% if product.is_available %}
+        <form action="{% url 'cart_add' product.pk %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.get_full_path }}">
+          <button class="btn btn-light" type="submit">В корзину</button>
+        </form>
+      {% endif %}
+    </div>
   </article>
 {% empty %}
   <p>Товары отсутствуют.</p>

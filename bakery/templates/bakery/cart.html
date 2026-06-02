@@ -1,12 +1,54 @@
-﻿{% extends 'bakery/base.html' %}
+{% extends 'bakery/base.html' %}
 {% block title %}Корзина{% endblock %}
 {% block content %}
 <h1>Корзина</h1>
-<p class="section-lead">Демо-макет корзины без серверной логики.</p>
-<table class="cart">
-  <tr><th>Товар</th><th>Кол-во</th><th>Цена</th></tr>
-  <tr><td>Батон нарезной</td><td>2</td><td>120 ₽</td></tr>
-  <tr><td>Круассан классический</td><td>3</td><td>210 ₽</td></tr>
-  <tr><td colspan="2"><b>Итого</b></td><td><b>330 ₽</b></td></tr>
-</table>
+{% if cart_items %}
+  <p class="section-lead">Товары хранятся в сессии пользователя и доступны до очистки корзины или завершения заказа.</p>
+  <table class="cart">
+    <tr>
+      <th>Товар</th>
+      <th>Кол-во</th>
+      <th>Цена</th>
+      <th>Сумма</th>
+      <th>Действия</th>
+    </tr>
+    {% for item in cart_items %}
+      <tr>
+        <td><a href="{% url 'product_detail' item.product.pk %}">{{ item.product.name }}</a></td>
+        <td>
+          <form action="{% url 'cart_update' item.product.pk %}" method="post" class="cart-quantity-form">
+            {% csrf_token %}
+            <input type="number" name="quantity" min="0" max="99" value="{{ item.quantity }}">
+            <button class="btn btn-light" type="submit">Обновить</button>
+          </form>
+        </td>
+        <td>{{ item.product.price }} ₽</td>
+        <td>{{ item.line_total }} ₽</td>
+        <td>
+          <form action="{% url 'cart_remove' item.product.pk %}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-light" type="submit">Удалить</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="3"><b>Итого</b></td>
+      <td colspan="2"><b>{{ total_price }} ₽</b></td>
+    </tr>
+  </table>
+  <form action="{% url 'cart_create_order' %}" method="post" class="order-form">
+    {% csrf_token %}
+    {% if user.is_authenticated %}
+      <button class="btn" type="submit">Создать заказ</button>
+    {% else %}
+      <a class="btn" href="{% url 'login' %}?next={% url 'cart' %}">Авторизоваться для заказа</a>
+    {% endif %}
+  </form>
+{% else %}
+  <section class="section">
+    <p>Корзина пуста.</p>
+    <a class="btn" href="{% url 'product_list' %}">Перейти в каталог</a>
+  </section>
+{% endif %}
 {% endblock %}

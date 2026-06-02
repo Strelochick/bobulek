@@ -1,13 +1,16 @@
-﻿from django.urls import path
+from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import path
 
 from .views import (
     AboutView,
+    AddToCartView,
     CartView,
     CategoryCreateView,
     CategoryDeleteView,
     CategoryDetailView,
     CategoryListView,
     CategoryUpdateView,
+    CreateOrderView,
     HomeView,
     ManufacturerCreateView,
     ManufacturerDeleteView,
@@ -24,15 +27,21 @@ from .views import (
     PromotionDetailView,
     PromotionListView,
     PromotionUpdateView,
+    RegisterView,
+    RemoveFromCartView,
     ReviewCreateView,
     ReviewDeleteView,
     ReviewListView,
     ReviewUpdateView,
+    UpdateCartItemView,
 )
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('about/', AboutView.as_view(), name='about'),
+    path('login/', LoginView.as_view(template_name='bakery/login.html'), name='login'),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
     path('products/', ProductListView.as_view(), name='product_list'),
     path('products/create/', ProductCreateView.as_view(), name='product_create'),
     path('products/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
@@ -58,4 +67,9 @@ urlpatterns = [
     path('reviews/<int:pk>/update/', ReviewUpdateView.as_view(), name='review_update'),
     path('reviews/<int:pk>/delete/', ReviewDeleteView.as_view(), name='review_delete'),
     path('cart/', CartView.as_view(), name='cart'),
+    path('cart/add/<int:pk>/', AddToCartView.as_view(), name='cart_add'),
+    path('cart/update/<int:pk>/', UpdateCartItemView.as_view(), name='cart_update'),
+    path('cart/remove/<int:pk>/', RemoveFromCartView.as_view(), name='cart_remove'),
+    path('cart/create-order/', CreateOrderView.as_view(), name='cart_create_order'),
 ]
+

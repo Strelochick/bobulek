@@ -29,6 +29,15 @@
       <a href="{% url 'promotion_list' %}" class="{% if request.resolver_match.url_name == 'promotion_list' or request.resolver_match.url_name == 'promotion_detail' %}is-active{% endif %}">Акции</a>
       <a href="{% url 'review_list' %}" class="{% if request.resolver_match.url_name == 'review_list' %}is-active{% endif %}">Отзывы</a>
       <a href="{% url 'cart' %}" class="{% if request.resolver_match.url_name == 'cart' %}is-active{% endif %}">Корзина</a>
+      {% if user.is_authenticated %}
+        <form action="{% url 'logout' %}" method="post" class="nav-form">
+          {% csrf_token %}
+          <button type="submit">Выход</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}" class="{% if request.resolver_match.url_name == 'login' %}is-active{% endif %}">Авторизация</a>
+        <a href="{% url 'register' %}" class="{% if request.resolver_match.url_name == 'register' %}is-active{% endif %}">Регистрация</a>
+      {% endif %}
     </nav>
   </div>
 </header>

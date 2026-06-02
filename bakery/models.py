@@ -1,4 +1,5 @@
-﻿from django.db import models
+﻿from django.conf import settings
+from django.db import models
 
 
 class Category(models.Model):
@@ -73,7 +74,22 @@ class Order(models.Model):
         ('done', 'Завершен'),
     ]
 
-    customer = models.ForeignKey('Customer', verbose_name='Покупатель', on_delete=models.CASCADE, related_name='orders')
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name='Пользователь',
+        on_delete=models.CASCADE,
+        related_name='orders',
+        null=True,
+        blank=True,
+    )
+    customer = models.ForeignKey(
+        'Customer',
+        verbose_name='Покупатель',
+        on_delete=models.SET_NULL,
+        related_name='orders',
+        null=True,
+        blank=True,
+    )
     created_at = models.DateTimeField('Дата заказа', auto_now_add=True)
     status = models.CharField('Статус', max_length=20, choices=STATUS_CHOICES, default='new')
     total_price = models.DecimalField('Итоговая сумма', max_digits=10, decimal_places=2)
@@ -129,3 +145,4 @@ class Promotion(models.Model):
 
     def __str__(self):
         return self.title
+

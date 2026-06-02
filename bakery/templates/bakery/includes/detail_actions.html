@@ -1,5 +1,7 @@
-﻿<div class="actions-row">
-  <a class="btn" href="{{ update_url }}">Изменить</a>
-  <a class="btn" href="{{ delete_url }}">Удалить</a>
+<div class="actions-row">
+  {% if user.is_staff %}
+    <a class="btn" href="{{ update_url }}">Изменить</a>
+    <a class="btn" href="{{ delete_url }}">Удалить</a>
+  {% endif %}
   <a class="btn" href="{{ back_url }}">{{ back_label }}</a>
 </div>

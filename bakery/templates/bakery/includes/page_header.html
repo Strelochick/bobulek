@@ -1,6 +1,6 @@
 ﻿<div class="page-header">
   <h1>{{ title }}</h1>
-  {% if create_url and create_label %}
+  {% if create_url and create_label and user.is_staff %}
     <a class="btn" href="{{ create_url }}">{{ create_label }}</a>
   {% endif %}
 </div>
