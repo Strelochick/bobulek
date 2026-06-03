@@ -2,4 +2,12 @@
   <a class="btn" href="{% url 'product_list' %}">Каталог</a>
   <a class="btn btn-light" href="{% url 'promotion_list' %}">Акции</a>
   <a class="btn btn-light" href="{% url 'cart' %}">Корзина</a>
+  {% if user.is_authenticated and not user.is_staff %}
+    <a class="btn btn-light" href="{% url 'order_list' %}">Мои заказы</a>
+  {% endif %}
+  {% if user.is_staff %}
+    <a class="btn btn-light" href="{% url 'customer_list' %}">Покупатели</a>
+    <a class="btn btn-light" href="{% url 'order_list' %}">Заказы</a>
+    <a class="btn btn-light" href="{% url 'orderitem_list' %}">Позиции заказов</a>
+  {% endif %}
 </aside>

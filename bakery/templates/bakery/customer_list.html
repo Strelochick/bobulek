@@ -1,0 +1,36 @@
+{% extends 'bakery/base.html' %}
+{% block title %}Покупатели{% endblock %}
+{% block content %}
+{% url 'customer_create' as customer_create_url %}
+{% include 'bakery/includes/page_header.html' with title='Покупатели' create_url=customer_create_url create_label='Добавить покупателя' %}
+<section class="section">
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>ФИО</th>
+          <th>Телефон</th>
+          <th>Email</th>
+          <th>Адрес</th>
+          <th>Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for customer in customers %}
+          <tr>
+            <td>{{ customer.pk }}</td>
+            <td>{{ customer.first_name }} {{ customer.last_name }}</td>
+            <td>{{ customer.phone }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.address }}</td>
+            <td><a href="{% url 'customer_detail' customer.pk %}">Открыть</a></td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="6">Покупатели отсутствуют.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

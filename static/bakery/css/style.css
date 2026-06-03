@@ -63,6 +63,12 @@ input, textarea, select { width: 100%; border: 1px solid var(--line); border-rad
 .cart th, .cart td { padding: 12px; text-align: left; }
 .cart th { background: #f5e6d2; }
 .cart tr + tr td { border-top: 1px solid var(--line); }
+.table-wrap { width: 100%; overflow-x: auto; }
+.data-table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 720px; }
+.data-table th, .data-table td { padding: 11px 12px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+.data-table th { background: #f5e6d2; font-weight: 800; }
+.data-table a { color: var(--accent-2); font-weight: 700; text-decoration: none; }
+.data-table tr:last-child td { border-bottom: 0; }
 .site-footer { background: #f3e4d1; border-top: 1px solid var(--line); padding: 16px 0; color: #6d5f52; }
 .messages { display: grid; gap: 10px; margin-bottom: 14px; }
 .message { border-radius: 10px; padding: 11px 13px; border: 1px solid var(--line); background: var(--surface); }

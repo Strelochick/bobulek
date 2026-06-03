@@ -1,4 +1,4 @@
-﻿-- Физическая схема БД PostgreSQL (по текущим моделям Django)
+-- Физическая схема БД PostgreSQL по текущим моделям Django
 
 CREATE TABLE bakery_category (
     id BIGSERIAL PRIMARY KEY,
@@ -29,7 +29,7 @@ CREATE TABLE bakery_product (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
     category_id BIGINT NOT NULL REFERENCES bakery_category(id) ON DELETE CASCADE,
-    price NUMERIC(10,2) NOT NULL,
+    price NUMERIC(10, 2) NOT NULL,
     weight INTEGER NOT NULL CHECK (weight >= 0),
     composition TEXT NOT NULL,
     description TEXT NOT NULL,
@@ -42,10 +42,11 @@ CREATE TABLE bakery_product (
 
 CREATE TABLE bakery_order (
     id BIGSERIAL PRIMARY KEY,
-    customer_id BIGINT NOT NULL REFERENCES bakery_customer(id) ON DELETE CASCADE,
+    user_id BIGINT NULL REFERENCES auth_user(id) ON DELETE CASCADE,
+    customer_id BIGINT NULL REFERENCES bakery_customer(id) ON DELETE SET NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     status VARCHAR(20) NOT NULL DEFAULT 'new',
-    total_price NUMERIC(10,2) NOT NULL
+    total_price NUMERIC(10, 2) NOT NULL
 );
 
 CREATE TABLE bakery_orderitem (
@@ -53,7 +54,7 @@ CREATE TABLE bakery_orderitem (
     order_id BIGINT NOT NULL REFERENCES bakery_order(id) ON DELETE CASCADE,
     product_id BIGINT NOT NULL REFERENCES bakery_product(id) ON DELETE CASCADE,
     quantity INTEGER NOT NULL DEFAULT 1 CHECK (quantity >= 0),
-    price NUMERIC(10,2) NOT NULL
+    price NUMERIC(10, 2) NOT NULL
 );
 
 CREATE TABLE bakery_review (

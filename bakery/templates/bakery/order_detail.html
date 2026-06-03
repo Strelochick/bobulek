@@ -1,0 +1,26 @@
+{% extends 'bakery/base.html' %}
+{% block title %}Заказ #{{ order.pk }}{% endblock %}
+{% block content %}
+<section class="section">
+  <h1>Заказ #{{ order.pk }}</h1>
+  <p><strong>Пользователь:</strong> {{ order.user|default:'-' }}</p>
+  <p><strong>Покупатель:</strong> {{ order.customer|default:'-' }}</p>
+  <p><strong>Дата:</strong> {{ order.created_at|date:'d.m.Y H:i' }}</p>
+  <p><strong>Статус:</strong> {{ order.get_status_display }}</p>
+  <p><strong>Итоговая сумма:</strong> {{ order.total_price }} ₽</p>
+</section>
+<section class="section">
+  <h2>Позиции заказа</h2>
+  <ul>
+    {% for item in order.items.all %}
+      <li><a href="{% url 'product_detail' item.product.pk %}">{{ item.product.name }}</a> - {{ item.quantity }} шт., {{ item.price }} ₽</li>
+    {% empty %}
+      <li>Позиции заказа отсутствуют.</li>
+    {% endfor %}
+  </ul>
+  {% url 'order_update' order.pk as update_url %}
+  {% url 'order_delete' order.pk as delete_url %}
+  {% url 'order_list' as back_url %}
+  {% include 'bakery/includes/detail_actions.html' with update_url=update_url delete_url=delete_url back_url=back_url back_label='Назад к заказам' %}
+</section>
+{% endblock %}

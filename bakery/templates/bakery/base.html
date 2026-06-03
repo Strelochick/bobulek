@@ -28,6 +28,13 @@
       <a href="{% url 'manufacturer_list' %}" class="{% if request.resolver_match.url_name == 'manufacturer_list' or request.resolver_match.url_name == 'manufacturer_detail' %}is-active{% endif %}">Производители</a>
       <a href="{% url 'promotion_list' %}" class="{% if request.resolver_match.url_name == 'promotion_list' or request.resolver_match.url_name == 'promotion_detail' %}is-active{% endif %}">Акции</a>
       <a href="{% url 'review_list' %}" class="{% if request.resolver_match.url_name == 'review_list' %}is-active{% endif %}">Отзывы</a>
+      {% if user.is_staff %}
+        <a href="{% url 'customer_list' %}" class="{% if request.resolver_match.url_name == 'customer_list' or request.resolver_match.url_name == 'customer_detail' %}is-active{% endif %}">Покупатели</a>
+        <a href="{% url 'order_list' %}" class="{% if request.resolver_match.url_name == 'order_list' or request.resolver_match.url_name == 'order_detail' %}is-active{% endif %}">Заказы</a>
+        <a href="{% url 'orderitem_list' %}" class="{% if request.resolver_match.url_name == 'orderitem_list' or request.resolver_match.url_name == 'orderitem_detail' %}is-active{% endif %}">Позиции</a>
+      {% elif user.is_authenticated %}
+        <a href="{% url 'order_list' %}" class="{% if request.resolver_match.url_name == 'order_list' or request.resolver_match.url_name == 'order_detail' %}is-active{% endif %}">Мои заказы</a>
+      {% endif %}
       <a href="{% url 'cart' %}" class="{% if request.resolver_match.url_name == 'cart' %}is-active{% endif %}">Корзина</a>
       {% if user.is_authenticated %}
         <form action="{% url 'logout' %}" method="post" class="nav-form">

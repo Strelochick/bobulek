@@ -1,0 +1,38 @@
+{% extends 'bakery/base.html' %}
+{% block title %}Заказы{% endblock %}
+{% block content %}
+{% url 'order_create' as order_create_url %}
+{% include 'bakery/includes/page_header.html' with title='Заказы' create_url=order_create_url create_label='Добавить заказ' %}
+<section class="section">
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Пользователь</th>
+          <th>Покупатель</th>
+          <th>Дата</th>
+          <th>Статус</th>
+          <th>Сумма</th>
+          <th>Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+          <tr>
+            <td>{{ order.pk }}</td>
+            <td>{{ order.user|default:'-' }}</td>
+            <td>{{ order.customer|default:'-' }}</td>
+            <td>{{ order.created_at|date:'d.m.Y H:i' }}</td>
+            <td>{{ order.get_status_display }}</td>
+            <td>{{ order.total_price }} ₽</td>
+            <td><a href="{% url 'order_detail' order.pk %}">Открыть</a></td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="7">Заказы отсутствуют.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

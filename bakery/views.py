@@ -10,7 +10,7 @@ from django.views import View
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
 
 from .forms import RegistrationForm
-from .models import Category, Manufacturer, Order, OrderItem, Product, Promotion, Review
+from .models import Category, Customer, Manufacturer, Order, OrderItem, Product, Promotion, Review
 
 
 CART_SESSION_KEY = 'cart'
@@ -19,6 +19,12 @@ CART_SESSION_KEY = 'cart'
 class StaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_staff
+
+
+class StaffOrOrderOwnerRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
+    def test_func(self):
+        order = self.get_object()
+        return self.request.user.is_staff or order.user_id == self.request.user.id
 
 
 def _get_cart(session):
@@ -155,7 +161,7 @@ class CreateOrderView(LoginRequiredMixin, View):
 
         request.session[CART_SESSION_KEY] = {}
         messages.success(request, f'Заказ #{order.pk} создан и привязан к пользователю {request.user.username}.')
-        return redirect('cart')
+        return redirect('order_detail', pk=order.pk)
 
 
 class ProductListView(ListView):
@@ -309,4 +315,106 @@ class ReviewUpdateView(StaffRequiredMixin, UpdateView):
 class ReviewDeleteView(StaffRequiredMixin, DeleteView):
     model = Review
     template_name = 'bakery/confirm_delete.html'
-    success_url = reverse_lazy('review_list')
+    success_url = reverse_lazy('review_list') 
+
+
+class CustomerListView(StaffRequiredMixin, ListView):
+    model = Customer
+    template_name = 'bakery/customer_list.html'
+    context_object_name = 'customers'
+
+
+class CustomerDetailView(StaffRequiredMixin, DetailView):
+    model = Customer
+    template_name = 'bakery/customer_detail.html'
+    context_object_name = 'customer'
+
+
+class CustomerCreateView(StaffRequiredMixin, CreateView):
+    model = Customer
+    fields = ['first_name', 'last_name', 'phone', 'email', 'address']
+    template_name = 'bakery/form.html'
+    success_url = reverse_lazy('customer_list')
+
+
+class CustomerUpdateView(StaffRequiredMixin, UpdateView):
+    model = Customer
+    fields = ['first_name', 'last_name', 'phone', 'email', 'address']
+    template_name = 'bakery/form.html'
+    success_url = reverse_lazy('customer_list')
+
+
+class CustomerDeleteView(StaffRequiredMixin, DeleteView):
+    model = Customer
+    template_name = 'bakery/confirm_delete.html'
+    success_url = reverse_lazy('customer_list')
+
+
+class OrderListView(LoginRequiredMixin, ListView):
+    model = Order
+    template_name = 'bakery/order_list.html'
+    context_object_name = 'orders'
+
+    def get_queryset(self):
+        queryset = super().get_queryset().select_related('user', 'customer')
+        if self.request.user.is_staff:
+            return queryset
+        return queryset.filter(user=self.request.user)
+
+
+class OrderDetailView(StaffOrOrderOwnerRequiredMixin, DetailView):
+    model = Order
+    template_name = 'bakery/order_detail.html'
+    context_object_name = 'order'
+
+
+class OrderCreateView(StaffRequiredMixin, CreateView):
+    model = Order
+    fields = ['user', 'customer', 'status', 'total_price']
+    template_name = 'bakery/form.html'
+    success_url = reverse_lazy('order_list')
+
+
+class OrderUpdateView(StaffRequiredMixin, UpdateView):
+    model = Order
+    fields = ['user', 'customer', 'status', 'total_price']
+    template_name = 'bakery/form.html'
+    success_url = reverse_lazy('order_list')
+
+
+class OrderDeleteView(StaffRequiredMixin, DeleteView):
+    model = Order
+    template_name = 'bakery/confirm_delete.html'
+    success_url = reverse_lazy('order_list')
+
+
+class OrderItemListView(StaffRequiredMixin, ListView):
+    model = OrderItem
+    template_name = 'bakery/orderitem_list.html'
+    context_object_name = 'order_items'
+
+
+class OrderItemDetailView(StaffRequiredMixin, DetailView):
+    model = OrderItem
+    template_name = 'bakery/orderitem_detail.html'
+    context_object_name = 'order_item'
+
+
+class OrderItemCreateView(StaffRequiredMixin, CreateView):
+    model = OrderItem
+    fields = ['order', 'product', 'quantity', 'price']
+    template_name = 'bakery/form.html'
+    success_url = reverse_lazy('orderitem_list')
+
+
+class OrderItemUpdateView(StaffRequiredMixin, UpdateView):
+    model = OrderItem
+    fields = ['order', 'product', 'quantity', 'price']
+    template_name = 'bakery/form.html'
+    success_url = reverse_lazy('orderitem_list')
+
+
+class OrderItemDeleteView(StaffRequiredMixin, DeleteView):
+    model = OrderItem
+    template_name = 'bakery/confirm_delete.html'
+    success_url = reverse_lazy('orderitem_list')
